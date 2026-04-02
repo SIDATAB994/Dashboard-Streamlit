@@ -5,7 +5,7 @@ from datetime import date
 st.set_page_config(page_title="📊 Betting Bot", layout="wide")
 st.title("📊 Betting Bot Dashboard")
 
-BOT_URL = "https://bot-flask-e3848ed3063c719336b32e0b4861c7d9.up.railway.app"  # Remplacer par ton URL Railway
+BOT_URL = "bot-flask-e3848ed3063c719336b32e0b4861c7d9.up.railway.app"  # Remplacer par ton URL Railway
 
 # Sélection de la date
 selected_date = st.date_input("Sélectionner une date pour le combiné", date.today())
