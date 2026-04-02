@@ -2,34 +2,37 @@ import streamlit as st
 import requests
 from datetime import date
 
-st.set_page_config(page_title="📊 Betting Bot", layout="wide")
-st.title("📊 Betting Bot Dashboard")
+st.set_page_config(page_title="Betting AI Pro", layout="wide")
 
-BOT_URL = "bot-flask-e3848ed3063c719336b32e0b4861c7d9.up.railway.app"  # Remplacer par ton URL Railway
+st.title("🤖 Betting AI Pro")
 
-# Sélection de la date
-selected_date = st.date_input("Sélectionner une date pour le combiné", date.today())
+BOT_URL = "https://bot-flask-e3848ed3063c719336b32e0b4861c7d9.up.railway.app"
 
-if st.button("🔄 Générer les paris"):
-    try:
-        requests.get(f"{BOT_URL}/run", timeout=10)
-        st.success("Paris générés !")
-    except:
-        st.error("Impossible de générer les paris. Vérifie le bot Flask.")
+selected_date = st.date_input("📅 Choisir une date", date.today())
 
-# Récupérer les paris pour la date sélectionnée
+if st.button("🚀 Générer combiné"):
+    st.info("Analyse en cours...")
+
 try:
-    response = requests.get(f"{BOT_URL}/bets", params={"date": selected_date}, timeout=10)
-    data = response.json()
+    data = requests.get(f"{BOT_URL}/bets", params={"date": selected_date}, timeout=10).json()
 
-    st.subheader(f"📅 Paris pour le {data.get('date', str(selected_date))}")
+    st.subheader("🎯 Pari Simple")
 
-    st.markdown("### 🎯 Simple")
-    st.write(data.get("simple", {}))
+    simple = data.get("simple", {})
+    st.metric("Match", simple.get("match", "-"))
+    st.write(simple)
 
-    st.markdown("### 🔗 Combo")
-    for bet in data.get("combo", []):
-        st.write(bet)
+    st.subheader("🔥 Combiné optimisé")
+
+    cols = st.columns(3)
+
+    for i, bet in enumerate(data.get("combo", [])):
+        with cols[i]:
+            st.markdown(f"### {bet['match']}")
+            st.write(f"Type: {bet['type']}")
+            st.write(f"Choix: {bet['prediction']}")
+            st.write(f"Cote: {bet['odd']}")
+            st.write(f"Confiance: {bet['confidence']}%")
 
 except:
-    st.error("Impossible de récupérer les paris du bot Flask.")
+    st.error("Erreur connexion bot")
