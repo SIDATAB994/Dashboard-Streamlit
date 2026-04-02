@@ -5,7 +5,7 @@ st.set_page_config(page_title="📊 Betting Bot", layout="wide")
 st.title("📊 Betting Bot Dashboard")
 
 # URL publique de ton bot Flask (à remplacer par ton URL Railway)
-BOT_URL = "https://TON-BOT-FLASK.up.railway.app"
+BOT_URL = "https://bot-flask-production.up.railway.app"
 
 # Bouton pour générer de nouveaux paris
 if st.button("🔄 Générer les paris du jour"):
